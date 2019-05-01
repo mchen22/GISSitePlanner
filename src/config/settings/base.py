@@ -43,6 +43,7 @@ USE_TZ = True
 DATABASES = {
     "default": env.db("DATABASE_URL", default="postgres:///final_project")
 }
+DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.spatialite"
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -63,6 +64,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
+    "django.contrib.gis", 
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
