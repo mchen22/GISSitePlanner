@@ -8,6 +8,7 @@ pytest = "*"
 pytest-cov = "*"
 pytest-django = "*"
 factory-boy = "*"
+pylint = "*"
 
 [packages]
 pset_6 = {editable = true,path = "."}
