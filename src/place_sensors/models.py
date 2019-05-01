@@ -1,5 +1,6 @@
 # from django.db import models
 from django.contrib.gis.db import models
+from django.contrib.gis import forms
 
 
 class Locations(models.Model):
@@ -7,6 +8,9 @@ class Locations(models.Model):
 
     name = models.CharField(max_length=50)
     outline = models.PolygonField()
+
+    def __str__(self):
+        return self.name
 
     
 class Sensors(models.Model):
@@ -17,6 +21,8 @@ class Sensors(models.Model):
     fov = models.IntegerField(default=10) # field of view of the sensor
     rng = models.IntegerField(default=50) # range of the sensor
 
+    def __str__(self):
+        return '{}({})'.format(self.name, self.stype)
 
 class SensorPlacements(models.Model):
     """Stores the statistics"""
@@ -27,4 +33,10 @@ class SensorPlacements(models.Model):
 
     class Meta:
         unique_together = ('site', 'sensor', )
+    
+    def perimeter(self):
+        return self.site.outline
+
+    def __str__(self):
+        return '{}({})'.format(self.site.name, self.sensor.stype)
     
