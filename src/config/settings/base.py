@@ -73,6 +73,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "final_project.users.apps.UsersAppConfig",
+    "place_sensors.apps.PlaceSensorsConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
