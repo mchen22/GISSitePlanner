@@ -1,0 +1,37 @@
+# Config file for automatic testing at travis-ci.org
+
+language: python
+dist: xenial
+python:
+  - 3.7
+
+# Command to run tests, e.g. python setup.py test
+install:
+- pip install pipenv
+- pipenv install --system --deploy --ignore-pipfile
+
+branches:
+  only:
+  - master
+  - develop
+
+stages:
+  - test
+  - name: answers
+    if: branch = master
+
+jobs:
+  include:
+    - stage: test
+      script: pytest -v
+      install:
+        - pip install pipenv
+        - pipenv install --system --deploy --dev --ignore-pipfile
+
+    - stage: answers
+      script:
+      # Before running, get the data from s3 using the secret
+      # credentials entered at https://travis-ci.com/csci-e-29/YOUR_PSET_REPO_NAME/settings
+      # DO NOT commit these variables to git.
+      - python3 -m final_project
+

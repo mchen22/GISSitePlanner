@@ -1,0 +1,31 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+pytest-django = "*"
+factory-boy = "*"
+
+[packages]
+pset_6 = {editable = true,path = "."}
+pset-utils = {editable = true,git = "https://github.com/csci-e-29/2019sp-pset-utils-sunilchomal"}
+django = "*"
+django-environ = "*"
+djangorestframework = "*"
+django-model-utils = "*"
+argon2-cffi = "*"
+django-allauth = "*"
+django-crispy-forms = "*"
+django-extensions = "*"
+coreapi = "*"
+dask = {extras = ["dataframe"],version = "*"}
+fastparquet = "*"
+s3fs = "*"
+luigi = "*"
+django-debug-toolbar = "*"
+
+[requires]
+python_version = "3.7"
