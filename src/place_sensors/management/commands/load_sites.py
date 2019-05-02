@@ -1,3 +1,5 @@
+import os
+
 from django.core.management import BaseCommand
 from django.db import transaction
 
@@ -8,10 +10,11 @@ from django.contrib.gis.geos import Polygon, LinearRing
 from django.contrib.gis.geos import GEOSGeometry
 
 from place_sensors.models import Locations, Sensors, SensorPlacements
-
+from pset_utils.io import atomic_write
 
 class Command(BaseCommand):
     help = "Load Site Data from kml"
+    INPUT_ROOT = os.path.join('data', 'site_wkt/')
 
     def add_arguments(self, parser):
         parser.add_argument("file", type=str, help="kml file name")
@@ -26,6 +29,11 @@ class Command(BaseCommand):
         Sensors.objects.all().delete()
         SensorPlacements.objects.all().delete()
 
+        for fp in os.listdir(self.INPUT_ROOT):
+            file_path = os.path.join(self.INPUT_ROOT, fp)
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        
         # load the data
         ds = DataSource(kmlfile)
         layer = ds[0]
@@ -38,7 +46,11 @@ class Command(BaseCommand):
             poly = Polygon(LinearRing([(pt[0], pt[1]) for pt in poly.tuple[0]]), srid=4326)
             l = Locations(name = site, outline=poly)
             l.save()
-        
+
+            fp = os.path.join(self.INPUT_ROOT,site)
+            with atomic_write(fp, 'w') as f:
+                f.write(poly.wkt)
+
         s = Sensors(stype='Radar', name='vendor1', fov=45, rng=200)
         s.save()
 
