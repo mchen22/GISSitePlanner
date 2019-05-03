@@ -11,6 +11,7 @@ from place_sensors.models import Locations, Sensors, SensorPlacements
 
 class Command(BaseCommand):
     """ Command to load site data from KML"""
+
     help = "Load Site Data from kml"
     INPUT_ROOT = os.path.join('data', 'site_wkt/')
 
@@ -31,7 +32,8 @@ class Command(BaseCommand):
         for fp in os.listdir(self.INPUT_ROOT):
             file_path = os.path.join(self.INPUT_ROOT, fp)
             if os.path.isfile(file_path):
-                os.unlink(file_path)
+                if not (fp == ".gitkeep"):
+                    os.unlink(file_path)
         
         # load the data from kml
         ds = DataSource(kmlfile)

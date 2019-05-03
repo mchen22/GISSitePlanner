@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+
+<Document>
+
+    {% for p in poly %}
+    <Placemark>
+	<name>{{ site_name }}.{{ sensor_name }}.{{ forloop.counter0 }}</name>
+	<Style>
+		<LineStyle>
+			<color>FF000000</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7F6891aa</color>
+			<fill>1</fill>
+			<outline>1</outline>
+		</PolyStyle>
+	</Style>
+	<Polygon>
+		<extrude>1</extrude>
+		<altitudeMode>clampToGround</altitudeMode>
+		<outerBoundaryIs>
+			{{ p.exterior_ring.kml|safe }}
+		</outerBoundaryIs>
+	</Polygon>
+    </Placemark>
+    {% endfor %}
+
+    <Placemark>
+	<name>{{ site_name }}</name>
+	<Style>
+		<LineStyle>
+			<color>FF000000</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>7FAAAAAA</color>
+			<fill>1</fill>
+			<outline>1</outline>
+		</PolyStyle>
+	</Style>
+	<Polygon>
+		<extrude>1</extrude>
+		<altitudeMode>clampToGround</altitudeMode>
+	    <outerBoundaryIs>
+    	    {{ outline.exterior_ring.kml|safe }}
+		</outerBoundaryIs>
+	</Polygon>
+    </Placemark>
+
+</Document>
+
+</kml>
