@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# docker build --build-arg CI_USER_TOKEN=eeff2c803103c0362719201b5acb5d86eedae32b  --tag=place_sensors .
+
+# replace /home/chomal/KMLSensors/data with the directory you want to map to
+# this directory would contain your site data & resulting kml files
+
+docker run -p 8081:8081 -v /home/chomal/KMLSensors/data:/app/data/ -it place_sensors:latest pipenv run python manage.py runserver 0.0.0.0:8081
+
+docker exec -d pc_docker pipenv run python manage.py load_sites data/sample.kml
+docker exec -d pc_docker pipenv run python manage.py run_algos -r
+docker exec -d pc_docker pipenv run python manage.py run_algos -c
+docker exec -d pc_docker pipenv run python manage.py write_kml
