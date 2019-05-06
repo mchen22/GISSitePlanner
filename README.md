@@ -1,5 +1,5 @@
 # Site Planner
-###Automatic Sensor Deployment tool for Surveillance Systems
+### Automatic Sensor Deployment tool for Surveillance Systems
 ##### CSCI E-29 Spring-2019 Final-Project
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -12,9 +12,16 @@
 - [Django App](#django-app)
   - [Database Model](#database-model)
   - [Commands](#commands)
+    - [Loading Site data from KML](#loading-site-data-from-kml)
+    - [Running sensor algorithms](#running-sensor-algorithms)
+    - [Exporting to KML](#exporting-to-kml)
   - [Custom Template](#custom-template)
 - [Luigi Task](#luigi-task)
   - [Execution of the Luigi Task](#execution-of-the-luigi-task)
+- [Sample Output](#sample-output)
+  - [Radar Placement shown on Admin Page](#radar-placement-shown-on-admin-page)
+  - [Radar Placement KML rendered on Google Earth (web)](#radar-placement-kml-rendered-on-google-earth-web)
+- [Further Work](#further-work)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## Objective
@@ -154,7 +161,7 @@ Note that we have applied the applied unique constraints for site and sensor mod
 
 ### Commands
 
-1.  Loading Site data from KML
+#### Loading Site data from KML
 Django management command for loading site data from a KML file is in 
 `place_sensors.management.commands.load_sites.py`
 
@@ -164,17 +171,7 @@ Docker command to execute this is
 docker exec -d pc_docker pipenv run python manage.py load_sites data/sample.kml
 ```
 
-1.  Running sensor algorithms
-Django management command for loading site data from a KML file is in 
-`place_sensors.management.commands.run_algos.py`
-
-Docker command to execute this is
-
-```bash
-docker exec -d pc_docker pipenv run python manage.py load_sites data/sample.kml
-```
-
-2.  Loading Site data from KML
+#### Running sensor algorithms
 Django management command for calculating the sensor coverage is in 
 place_sensors.management.commands.load_sites.py
 
@@ -185,7 +182,7 @@ docker exec -d pc_docker pipenv run python manage.py run_algos -r # for Radar
 docker exec -d pc_docker pipenv run python manage.py run_algos -c # for Camera
 ```
 
-3.  Exporting to KML
+#### Exporting to KML
 Django management command for exporting to KML file is in 
 `place_sensors.management.commands.load_sites.py`
 
@@ -330,6 +327,15 @@ build(task_list, local_scheduler=True)
         
 ```
 
+## Sample Output
+
+### Radar Placement shown on Admin Page
+![Radar Placement - Admin Page](images/Radar%20Placement%20-%20Admin%20Page.png)
+
+### Radar Placement KML rendered on Google Earth (web)
+![Radar Placement KML - Google Earth](images/Radar%20Placement%20KML%20-%20Google%20Earth.png)
+
+Note: Sample KML Source - https://developers.google.com/kml/documentation/kml_tut#polygons
 ## Further Work
 
 * Using elevation information (DTEM)
