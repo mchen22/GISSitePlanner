@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# docker build --build-arg CI_USER_TOKEN=eeff2c803103c0362719201b5acb5d86eedae32b  --tag=place_sensors .
+# docker build --build-arg CI_USER_TOKEN=XXX  --tag=place_sensors .
 
 # replace /home/chomal/KMLSensors/data with the directory you want to map to
 # this directory would contain your site data & resulting kml files
